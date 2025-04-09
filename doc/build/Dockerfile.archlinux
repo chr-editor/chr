@@ -1,5 +1,5 @@
 FROM archlinux:latest
-RUN pacman -Syu --noconfirm base-devel gcc meson git qt5-base qt5-tools ninja python pkg-config syntax-highlighting5
+RUN pacman -Syu --noconfirm base-devel gcc meson git qt5-base qt5-tools ninja python pkg-config syntax-highlighting5 cmake
 
 # build lib termpaint
 RUN git clone https://github.com/termpaint/termpaint && \
@@ -16,8 +16,6 @@ RUN git clone https://github.com/tuiwidgets/tuiwidgets && \
     meson compile -C _build && \
     meson install -C _build && \
     cd ..
-
-RUN pacman -Syu --noconfirm cmake
 
 # build editor chr
 RUN git clone https://github.com/istoph/editor && \
