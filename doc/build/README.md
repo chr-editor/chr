@@ -4,7 +4,7 @@ To build the editor on your system, you need a set of dependencies:
 
 * meson (>= 0.59.0) https://github.com/mesonbuild/meson
 * ninja-build  https://github.com/ninja-build/ninja
-* pkg-config https://www.freedesktop.org/wiki/Software/pkg-config/
+* pkgconf http://pkgconf.org/
 * qmake (>5.11.3) https://doc.qt.io/qt-5/qmake-manual.html
 * qtbase (>5.11.3) https://code.qt.io/cgit/qt/qtbase.git/log/?h=5.15
 * termpaint (>= 0.3.0) https://github.com/termpaint/termpaint docs: https://termpaint.namepad.de/latest/
