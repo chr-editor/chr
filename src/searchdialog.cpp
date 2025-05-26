@@ -378,13 +378,13 @@ QString SearchDialog::applyEscapeSequences(const QString &text, bool forRegexRep
             } else if (nextChar == 'x' && i + 3 < text.size()
                        && isHexDigit(i + 2) && isHexDigit(i + 3)) {
                 // hex
-                const int value = text.midRef(i + 2, 2).toInt(nullptr, 16);
+                const int value = text.mid(i + 2, 2).toInt(nullptr, 16);
                 i += 3;
                 insertChar(value);
             } else if (nextChar == 'u' && i + 5 < text.size()
                        && isHexDigit(i + 2) && isHexDigit(i + 3) && isHexDigit(i + 4) && isHexDigit(i + 5)) {
                 // unicode
-                const int value = text.midRef(i + 2, 4).toInt(nullptr, 16);
+                const int value = text.mid(i + 2, 4).toInt(nullptr, 16);
                 i += 5;
                 insertChar(value);
             } else if (nextChar == '\\') {
@@ -416,7 +416,7 @@ QString SearchDialog::applyEscapeSequences(const QString &text, bool forRegexRep
                 result += QChar(0x0b);
                 i += 1;
             } else if (forRegexReplacementText && nextChar >= '1' && nextChar <= '9') {
-                result += text.midRef(i, 2);
+                result += text.mid(i, 2);
                 i += 1;
             } else {
                 result += nextChar;

@@ -92,7 +92,7 @@ File::File(Tui::ZTextMetrics textMetrics, Tui::ZWidget *parent)
 
 void File::emitCursorPostionChanged() {
     const auto [cursorCodeUnit, cursorLine, cursorColumn] = cursorPositionOrBlockSelectionEnd();
-    int utf8CodeUnit = document()->line(cursorLine).leftRef(cursorCodeUnit).toUtf8().size();
+    int utf8CodeUnit = document()->line(cursorLine).left(cursorCodeUnit).toUtf8().size();
     cursorPositionChanged(cursorColumn, cursorCodeUnit, utf8CodeUnit, cursorLine);
 
     if (_stdin && document()->lineCount() - 1 == cursorLine) {
