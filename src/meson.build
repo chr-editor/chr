@@ -84,10 +84,10 @@ configure_file(
 
 
 editor_lib = static_library('editor', [editor_sources, syntax_qrc],
-  qt5.preprocess(moc_headers: editor_headers, moc_sources: editor_sources,
+  qt.preprocess(moc_headers: editor_headers, moc_sources: editor_sources,
   include_directories: include_directories('.')),
   include_directories: include_directories('.'),
-  dependencies : [qt5_dep, tuiwidgets_dep, posixsignalmanager_dep, syntax_dep])
+  dependencies : [qt_dep, tuiwidgets_dep, posixsignalmanager_dep, syntax_dep])
 
 executable('chr', main,
   vcs_dep,
@@ -95,7 +95,7 @@ executable('chr', main,
   install : true,
   include_directories: include_directories('.'),
   link_with: editor_lib,
-  dependencies : [qt5_dep, tuiwidgets_dep, posixsignalmanager_dep, syntax_dep])
+  dependencies : [qt_dep, tuiwidgets_dep, posixsignalmanager_dep, syntax_dep])
 
 verbose_kwargs = {}
 if meson.version().version_compare('>=0.62')

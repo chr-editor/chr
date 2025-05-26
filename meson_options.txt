@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: BSL-1.0
 
+option('qt', type : 'combo', choices : ['qt5', 'qt6'], value : 'qt5')
 option('rpath', type : 'string', value : '')
-option('syntax_highlighting', type: 'boolean', value: false, description: 'enable syntax highlighting (needs KF5SyntaxHighlighting)')
+option('syntax_highlighting', type: 'boolean', value: false, description: 'enable syntax highlighting (needs KF5SyntaxHighlighting or KF6SyntaxHighlighting)')
 option('system-catch2', type : 'feature', value : 'disabled')
 option('tests', type : 'boolean', value : true)
 option('version', type : 'string', value : 'git')

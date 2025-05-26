@@ -14,23 +14,31 @@ add_project_arguments('-std=gnu++17', language : 'cpp')
 add_project_arguments('-Wall', '-Wextra', language: 'cpp')
 add_project_arguments('-Werror=return-type', language: 'cpp')
 
+qt_version = get_option('qt')
+qt = import(qt_version)
+qt_dep = dependency(qt_version, modules: ['Core', 'Concurrent'])
 
-qt5 = import('qt5')
-qt5_dep = dependency('qt5', modules: ['Core', 'Concurrent'])
+syntax_dep = []
+syntax_qrc = qt.compile_resources(sources: 'syntax.qrc')
 
-tuiwidgets_dep = dependency('TuiWidgets', version: '>= 0.2.1')
-if tuiwidgets_dep.version().version_compare('>= 0.2.2')
-  add_project_arguments('-DHAS_TUIWIDGETS_0_2_2', language: 'cpp')
-endif
-
-posixsignalmanager_dep = dependency('PosixSignalManager')
-
-if get_option('syntax_highlighting')
-    syntax_dep = declare_dependency(dependencies:dependency('KF5SyntaxHighlighting'), compile_args: ['-DSYNTAX_HIGHLIGHTING'])
-    syntax_qrc = qt5.compile_resources(sources: 'syntax.qrc')
+if qt_version == 'qt5'
+    tuiwidgets_dep = dependency('TuiWidgets', version: '>= 0.2.1')
+    if tuiwidgets_dep.version().version_compare('>= 0.2.2')
+      add_project_arguments('-DHAS_TUIWIDGETS_0_2_2', language: 'cpp')
+    endif
+    posixsignalmanager_dep = dependency('PosixSignalManager')
+    if get_option('syntax_highlighting')
+        syntax_dep = declare_dependency(dependencies:dependency('KF5SyntaxHighlighting'), compile_args: ['-DSYNTAX_HIGHLIGHTING'], sources: syntax_qrc)
+    endif
 else
-    syntax_dep = []
-    syntax_qrc = []
+    tuiwidgets_dep = dependency('TuiWidgetsQt6', version: '>= 0.2.1')
+    if tuiwidgets_dep.version().version_compare('>= 0.2.2')
+      add_project_arguments('-DHAS_TUIWIDGETS_0_2_2', language: 'cpp')
+    endif
+    posixsignalmanager_dep = dependency('PosixSignalManagerQt6')
+    if get_option('syntax_highlighting')
+        syntax_dep = declare_dependency(dependencies:dependency('KF6SyntaxHighlighting'), compile_args: ['-DSYNTAX_HIGHLIGHTING'], sources: syntax_qrc)
+    endif
 endif
 
 install_man('manpages/chr.1')
