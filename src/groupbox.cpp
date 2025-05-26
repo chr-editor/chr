@@ -57,7 +57,7 @@ QSize GroupBox::sizeHint() const {
         QMargins cm = contentsMargins();
         sh.rwidth() += cm.left() + cm.right();
         sh.rheight() += cm.top() + cm.bottom();
-        sh.rwidth() = std::max(sh.rwidth(), text().size() + 1);
+        sh.rwidth() = std::max(int(sh.rwidth()), int(text().size()) + 1);
         return sh.expandedTo(minimumSize()).boundedTo(maximumSize());
     }
     return {text().size() + 1, 1};
