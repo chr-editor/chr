@@ -41,6 +41,7 @@ public:
     void addWindow(Tui::ZWidget *w);
 
     void setMode(LayoutMode _mode);
+    LayoutMode Mode();
 
 public:
     void setGeometry(QRect r) override;

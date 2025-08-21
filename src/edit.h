@@ -93,6 +93,7 @@ private:
     void quitImpl(int i);
     void searchDialog();
     void replaceDialog();
+    void updateLayoutMode();
 
 private:
     File *_file = nullptr;

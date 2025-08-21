@@ -165,6 +165,10 @@ void MdiLayout::setMode(MdiLayout::LayoutMode mode) {
     relayout();
 }
 
+MdiLayout::LayoutMode MdiLayout::Mode() {
+    return _mode;
+}
+
 void MdiLayout::setGeometry(QRect r) {
     height = r.height();
     width = r.width();

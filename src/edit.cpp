@@ -309,30 +309,35 @@ void Editor::setupUi() {
     _cmdTileVert = new Tui::ZCommandNotifier("TileVert", this);
     QObject::connect(_cmdTileVert, &Tui::ZCommandNotifier::activated, this, [this] {
             _mdiLayout->setMode(MdiLayout::LayoutMode::TileV);
+            updateLayoutMode();
         }
     );
 
     QObject::connect(new Tui::ZShortcut(Tui::ZKeySequence::forShortcutSequence("e", Qt::ControlModifier, "v", {}), this, Qt::ApplicationShortcut), &Tui::ZShortcut::activated,
         this, [this] {
             _mdiLayout->setMode(MdiLayout::LayoutMode::TileV);
+            updateLayoutMode();
         }
     );
 
     _cmdTileHorz = new Tui::ZCommandNotifier("TileHorz", this);
     QObject::connect(_cmdTileHorz, &Tui::ZCommandNotifier::activated, this, [this] {
             _mdiLayout->setMode(MdiLayout::LayoutMode::TileH);
+            updateLayoutMode();
         }
     );
 
     QObject::connect(new Tui::ZShortcut(Tui::ZKeySequence::forShortcutSequence("e", Qt::ControlModifier, "h", {}), this, Qt::ApplicationShortcut), &Tui::ZShortcut::activated,
         this, [this] {
             _mdiLayout->setMode(MdiLayout::LayoutMode::TileH);
+            updateLayoutMode();
         }
     );
 
     _cmdTileFull = new Tui::ZCommandNotifier("TileFull", this);
     QObject::connect(_cmdTileFull, &Tui::ZCommandNotifier::activated, this, [this] {
             _mdiLayout->setMode(MdiLayout::LayoutMode::Base);
+            updateLayoutMode();
         }
     );
 
@@ -709,9 +714,13 @@ void Editor::enableFileCommands(bool enable) {
 #ifdef SYNTAX_HIGHLIGHTING
     _cmdSyntaxHighlight->setEnabled(enable);
 #endif
-    _cmdTileVert->setEnabled(enable);
-    _cmdTileHorz->setEnabled(enable);
-    _cmdTileFull->setEnabled(enable);
+    if (_mdiLayout) {
+        updateLayoutMode();
+    } else {
+        _cmdTileVert->setEnabled(enable);
+        _cmdTileHorz->setEnabled(enable);
+        _cmdTileFull->setEnabled(enable);
+    }
     _cmdSearch->setEnabled(enable);
     _cmdReplace->setEnabled(enable);
 }
@@ -727,6 +736,14 @@ void Editor::replaceDialog() {
     if (_replaceDialog) {
         _replaceDialog->open();
        _replaceDialog->setSearchText(_file->selectedText());
+    }
+}
+
+void Editor::updateLayoutMode() {
+    if (_mdiLayout) {
+        _cmdTileVert->setEnabled(_mdiLayout->Mode() != MdiLayout::LayoutMode::TileV);
+        _cmdTileHorz->setEnabled(_mdiLayout->Mode() != MdiLayout::LayoutMode::TileH);
+        _cmdTileFull->setEnabled(_mdiLayout->Mode() != MdiLayout::LayoutMode::Base);
     }
 }
 
