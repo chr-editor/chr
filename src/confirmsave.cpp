@@ -71,7 +71,7 @@ ConfirmSave::ConfirmSave(Tui::ZWidget *parent, QString filename, Type type, bool
         bCancel->setDefault(true);
         bCancel->setFocus();
     }
-    bCancel->setText("Cancel");
+    bCancel->setMarkup("<m>C</m>ancel");
     hbox->addWidget(bCancel);
 
     //Discard

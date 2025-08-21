@@ -57,7 +57,7 @@ InsertCharacter::InsertCharacter(Tui::ZWidget *parent) : Tui::ZDialog(parent) {
     Tui::ZHBoxLayout *hbox4 = new Tui::ZHBoxLayout();
     Tui::ZButton *cancelBtn = new Tui::ZButton(this);
     cancelBtn->setGeometry({3, 5, 7, 7});
-    cancelBtn->setText("Cancel");
+    cancelBtn->setMarkup("<m>C</m>ancel");
     hbox4->addWidget(cancelBtn);
 
     Tui::ZButton *insertButton = new Tui::ZButton(this);

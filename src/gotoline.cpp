@@ -34,7 +34,7 @@ GotoLine::GotoLine(Tui::ZWidget *parent) : Tui::ZDialog(parent) {
     Tui::ZHBoxLayout *hbox2 = new Tui::ZHBoxLayout();
     Tui::ZButton *buttonCancel = new Tui::ZButton(this);
     buttonCancel->setGeometry({3, 5, 7, 7});
-    buttonCancel->setText("Cancel");
+    buttonCancel->setMarkup("<m>C</m>ancel");
     hbox2->addWidget(buttonCancel);
 
     Tui::ZButton *buttonOK = new Tui::ZButton(this);

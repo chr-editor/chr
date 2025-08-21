@@ -38,7 +38,7 @@ OpenDialog::OpenDialog(Tui::ZWidget *parent, QString path) : Tui::ZDialog(parent
 
     _cancelButton = new Tui::ZButton(this);
     _cancelButton->setGeometry({25, 12, 12, 1});
-    _cancelButton->setText("Cancel");
+    _cancelButton->setMarkup("<m>C</m>ancel");
 
     _okButton = new Tui::ZButton(this);
     _okButton->setGeometry({37, 12, 10, 1});

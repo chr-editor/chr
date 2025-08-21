@@ -27,7 +27,7 @@ OverwriteDialog::OverwriteDialog(Tui::ZWidget *parent, QString fileName) : Tui::
         Tui::ZHBoxLayout *hbox = new Tui::ZHBoxLayout();
         hbox->setSpacing(2);
         _cancelButton = new Tui::ZButton(this);
-        _cancelButton->setText("Cancel");
+        _cancelButton->setMarkup("<m>C</m>ancel");
         hbox->addWidget(_cancelButton);
 
         _okButton = new Tui::ZButton(this);

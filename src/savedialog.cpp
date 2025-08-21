@@ -42,7 +42,7 @@ SaveDialog::SaveDialog(Tui::ZWidget *parent, File *file) : Tui::ZDialog(parent) 
     _hiddenCheckBox->setGeometry({3, 11, 13, 1});
     _model->setDisplayHidden(_hiddenCheckBox->checkState() == Qt::CheckState::Checked);
 
-    _crlf = new Tui::ZCheckBox(Tui::withMarkup, "<m>C</m>RLF Mode", this);
+    _crlf = new Tui::ZCheckBox(Tui::withMarkup, "C<m>R</m>LF Mode", this);
     _crlf->setGeometry({3, 12, 16, 1});
     if (file->document()->crLfMode()) {
         _crlf->setCheckState(Qt::Checked);
@@ -52,7 +52,7 @@ SaveDialog::SaveDialog(Tui::ZWidget *parent, File *file) : Tui::ZDialog(parent) 
 
     _cancelButton = new Tui::ZButton(this);
     _cancelButton->setGeometry({25, 12, 12, 1});
-    _cancelButton->setText("Cancel");
+    _cancelButton->setMarkup("<m>C</m>ancel");
 
     _saveButton = new Tui::ZButton(this);
     _saveButton->setGeometry({37, 12, 10, 1});

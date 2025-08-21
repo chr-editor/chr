@@ -67,7 +67,7 @@ SyntaxHighlightDialog::SyntaxHighlightDialog(Tui::ZWidget *root) : Tui::ZDialog(
     hbox4->addStretch();
 
     Tui::ZButton *buttonClose = new Tui::ZButton(this);
-    buttonClose->setText("Close");
+    buttonClose->setMarkup("<m>C</m>ancel");
     buttonClose->setDefault(true);
     hbox4->addWidget(buttonClose);
 
