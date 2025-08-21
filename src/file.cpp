@@ -359,6 +359,13 @@ bool File::setFilename(QString filename) {
         return setFilename(filenameInfo.symLinkTarget());
     }
     document()->setFilename(filenameInfo.absoluteFilePath());
+
+#ifdef SYNTAX_HIGHLIGHTING
+    _syntaxHighlightDefinition = _syntaxHighlightRepo.definitionForFileName(getFilename());
+    syntaxHighlightDefinition();
+    updateSyntaxHighlighting(true);
+#endif
+
     return true;
 }
 
@@ -504,11 +511,6 @@ bool File::openText(QString filename) {
         }
 
         adjustScrollPosition();
-
-#ifdef SYNTAX_HIGHLIGHTING
-        _syntaxHighlightDefinition = _syntaxHighlightRepo.definitionForFileName(getFilename());
-        syntaxHighlightDefinition();
-#endif
 
         return true;
     }
