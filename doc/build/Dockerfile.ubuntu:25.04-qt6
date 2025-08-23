@@ -1,0 +1,33 @@
+FROM ubuntu:25.04
+
+RUN apt update; DEBIAN_FRONTEND=noninteractive apt install -y build-essential git meson ninja-build pkg-config qmake6 qt6-base-dev qt6-tools-dev-tools libkf6syntaxhighlighting-dev libkf6syntaxhighlighting-tools qt6-5compat-dev cmake catch2
+
+# build lib termpaint
+RUN git clone https://github.com/termpaint/termpaint && \
+    cd termpaint && \
+    meson setup _build -Dprefix=$HOME/opt/tuiwidgets-prefix -Dsystem-catch2=enabled && \
+    meson compile -C _build && \
+    meson install -C _build && \
+    cd ..
+
+# build lib tuiwidgets
+RUN git clone https://github.com/tuiwidgets/tuiwidgets && \
+    cd tuiwidgets && \
+    PKG_CONFIG_PATH=$HOME/opt/tuiwidgets-prefix/lib/$(uname -m)-linux-gnu/pkgconfig meson setup _build -Dprefix=$HOME/opt/tuiwidgets-prefix -Drpath=$HOME/opt/tuiwidgets-prefix/lib/$(uname -m)-linux-gnu/ -Dsystem-catch2=enabled -Dqt=qt6 && \
+    meson compile -C _build && \
+    meson install -C _build && \
+    cd ..
+
+# build editor chr
+RUN git clone https://github.com/istoph/editor && \
+    cd editor && \
+    PKG_CONFIG_PATH=$HOME/opt/tuiwidgets-prefix/lib/$(uname -m)-linux-gnu/pkgconfig meson setup _build -Dsyntax_highlighting=true -Drpath=$HOME/opt/tuiwidgets-prefix/lib/$(uname -m)-linux-gnu/ -Dsystem-catch2=enabled -Dversion=docker -Dqt=qt6 && \
+    meson compile -C _build && \
+    meson install -C _build && \
+    cd ..
+
+# debug info
+RUN chr -v && \
+    chr -h
+
+
