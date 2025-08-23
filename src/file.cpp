@@ -1912,7 +1912,7 @@ void File::keyEvent(Tui::ZKeyEvent *event) {
     } else if (event->key() == Qt::Key_Delete && (event->modifiers() == 0 || event->modifiers() == Qt::ControlModifier)) {
         disableDetachedScrolling();
         setSelectMode(false);
-        if (hasBlockSelection()) {
+        if (hasBlockSelection() || ZTextEdit::hasSelection()) {
             delAndClearSelection();
         } else if (hasMultiInsert()) {
             if (event->modifiers() & Qt::ControlModifier) {
