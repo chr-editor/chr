@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/License-Boost_1.0-lightblue.svg)](/COPYING)
+[![chr](https://snapcraft.io/chr/badge.svg)](https://snapcraft.io/chr)
 
 A terminal based text editor.
 
