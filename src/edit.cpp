@@ -77,7 +77,7 @@ void Editor::setupUi() {
                                 //{ "Goto Previous Marker", "Ctrl-.", "previousLineMarker", {}},
                             // }},
                             {},
-                            { "Sort Selcted Lines", "Alt-Shift-S", "SortSelectedLines", {}}
+                            { "Sort Selected Lines", "Alt-Shift-S", "SortSelectedLines", {}}
                         }
                       },
                       { "<m>O</m>ptions", "", {}, {
