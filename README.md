@@ -28,11 +28,20 @@ Dependencies in Debian trixie:
 build-essential meson ninja-build pkg-config qt5-qmake qttools5-dev-tools qtbase5-dev libtermpaint-dev libtuiwidgets-dev libposixsignalmanager-dev
 ```
 
-For third-party syntex highlighting you need the compile
+Dependencies in Fedora:
+```
+devscripts git meson ninja-build pkgconfig qt5-qtbase-devel
+```
+
+See doc/build/ for other distributions
+
+For third-party syntax highlighting you need the compile
 option: `-Dsyntax_highlighting=true` and the following additional dependencies:
 ```
 libkf5syntaxhighlighting-dev libkf5syntaxhighlighting-tools cmake
 ```
+
+(Fedora: kf5-syntax-highlighting-devel)
 
 Additional options are:
 * `-Dtests=true` for switching build tests on and off.
