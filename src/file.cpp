@@ -398,6 +398,8 @@ bool File::stdinText() {
 }
 
 bool File::initText() {
+    // Workaround for bug in tuiwidgets <= 0.2.3 that initial change doesn't trigger syntax highlighting
+    textCursor().insertText(" ");
     clear();
     return true;
 }
