@@ -18,7 +18,7 @@ It has been written from scratch using [Tui Widget](https://tuiwidgets.namepad.d
 ## Contribute
 
 This project is always open for contributions and welcomes merge requests.
-Take a look at our [issue tracker](https://github.com/istoph/editor/issues)
+Take a look at our [issue tracker](https://github.com/chr-editor/chr/issues)
 for open issues.
 
 ### Technologies / Dependencies
@@ -43,14 +43,14 @@ See also [Tui Widgets](https://tuiwidgets.namepad.de/)
 and [Termpaint](https://termpaint.namepad.de/)
 
 ```
-git clone https://github.com/istoph/editor
+git clone https://github.com/chr-editor/chr
 cd editor
 meson setup _build
 meson compile -C _build
 meson install -C _build
 ```
 
-For more details see: [doc](https://github.com/istoph/editor/tree/main/doc/build/README.md)
+For more details see: [doc](https://github.com/chr-editor/chr/tree/main/doc/build/README.md)
 
 
 ## Doku
@@ -483,7 +483,7 @@ FILES
 
 BUGS
        Errors  in  this  software  can  be  reported  via  the  bugtracker  on
-       https://github.com/istoph/editor.
+       https://github.com/chr-editor/chr.
 
 AUTHOR
        Christoph Hüffelmann <chr@istoph.de> Martin Hostettler <textshell@uchu‐

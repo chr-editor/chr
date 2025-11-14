@@ -38,7 +38,7 @@ AboutDialog::AboutDialog(Tui::ZWidget *parent) : Tui::ZDialog(parent) {
 #endif
 
     Tui::ZLabel *githubLabel = new Tui::ZLabel(this);
-    githubLabel->setText("Bugtracker: https://github.com/istoph/editor");
+    githubLabel->setText("Bugtracker: https://github.com/chr-editor/chr");
     vbox->addWidget(githubLabel);
 
     Tui::ZHBoxLayout *hbox1 = new Tui::ZHBoxLayout();

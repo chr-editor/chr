@@ -42,7 +42,7 @@ cd ..
 
 # build chr editor
 ```
-git clone https://github.com/istoph/editor
+git clone https://github.com/chr-editor/chr
 cd editor
 PKG_CONFIG_PATH=$HOME/opt/tuiwidgets-prefix/lib/x86_64-linux-gnu/pkgconfig meson setup _build -Dsyntax_highlighting=true -Drpath=$HOME/opt/tuiwidgets-prefix/lib/x86_64-linux-gnu/
 meson compile -C _build
@@ -54,7 +54,7 @@ cd ..
 These Dockerfiles are for testing whether the build still works on your distro.
 Or you can see how it works.
 
-https://github.com/istoph/editor/tree/main/doc/build/
+https://github.com/chr-editor/chr/tree/main/doc/build/
 
 ```
 docker build -f Dockerfile.debian\:sid -t sid .
