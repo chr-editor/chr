@@ -489,7 +489,7 @@ AUTHOR
        Christoph Hüffelmann <chr@istoph.de> Martin Hostettler <textshell@uchu‐
        ujin.de>
 
-0.1.80                            06 Apr 2025                           man(1)
+0.1.81                            15 Nov 2025                           man(1)
 ```
 
 ## License

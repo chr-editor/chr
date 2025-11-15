@@ -1,6 +1,16 @@
 # Changelog chr editor
 ======================
 
+## 0.1.81 (2025-11-15)
+
+  * New Qt6 support with option -Dqt=qt6
+    For Qt6 support you need posixsignalmanager >= 0.3.1 and tuiwidgets >= 0.2.3
+
+  * Fix: Delete selected text on last line.
+  * Fix: With workaround for syntax highlighting problem in tuiwidgets.
+  * Disable active window layout in the menu.
+  * Standardize cancel button with markup.
+
 ## 0.1.80 (2025-04-07)
 
   * New Upstream Release termpaint (0.3.1)
