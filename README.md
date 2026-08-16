@@ -44,7 +44,7 @@ and [Termpaint](https://termpaint.namepad.de/)
 
 ```
 git clone https://github.com/chr-editor/chr
-cd editor
+cd chr
 meson setup _build
 meson compile -C _build
 meson install -C _build
