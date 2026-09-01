@@ -19,7 +19,7 @@ RUN git clone https://github.com/tuiwidgets/tuiwidgets && \
 
 # build editor chr
 RUN git clone https://github.com/chr-editor/chr && \
-    cd editor && \
+    cd chr && \
     PKG_CONFIG_PATH=$HOME/opt/tuiwidgets-prefix/lib/pkgconfig meson setup _build -Dsyntax_highlighting=true -Drpath=$HOME/opt/tuiwidgets-prefix/lib/ -Dsystem-catch2=enabled && \
     meson compile -C _build && \
     meson install -C _build && \

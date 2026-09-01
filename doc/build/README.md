@@ -43,7 +43,7 @@ cd ..
 # build chr editor
 ```
 git clone https://github.com/chr-editor/chr
-cd editor
+cd chr
 PKG_CONFIG_PATH=$HOME/opt/tuiwidgets-prefix/lib/x86_64-linux-gnu/pkgconfig meson setup _build -Dsyntax_highlighting=true -Drpath=$HOME/opt/tuiwidgets-prefix/lib/x86_64-linux-gnu/
 meson compile -C _build
 meson install -C _build
