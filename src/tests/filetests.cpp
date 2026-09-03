@@ -41,12 +41,12 @@ TEST_CASE("file") {
     terminal.setMainWidget(&root);
     w->setGeometry({0, 0, 80, 24});
 
-    File *f = new File(terminal.textMetrics(), w);
+    auto f = std::make_unique<File>(terminal.textMetrics(), w);
     f->setFocus();
     f->setGeometry({0, 0, 80, 24});
 
     DocumentTestHelper t;
-    Tui::ZDocument &doc = t.getDoc(f);
+    Tui::ZDocument &doc = t.getDoc(f.get());
     Tui::ZDocumentCursor cursor{&doc, [&terminal,&doc](int line, bool wrappingAllowed) {
             (void)wrappingAllowed;
             Tui::ZTextLayout lay(terminal.textMetrics(), doc.line(line));
@@ -169,11 +169,11 @@ TEST_CASE("file-getseter") {
     terminal.setMainWidget(&root);
     w->setGeometry({0, 0, 80, 24});
 
-    File *f = new File(terminal.textMetrics(), w);
+    auto f = std::make_unique<File>(terminal.textMetrics(), w);
 
     DocumentTestHelper t;
 
-    Tui::ZDocument &doc = t.getDoc(f);
+    Tui::ZDocument &doc = t.getDoc(f.get());
     Tui::ZDocumentCursor cursor{&doc, [&terminal,&doc](int line, bool wrappingAllowed) {
             (void)wrappingAllowed;
             Tui::ZTextLayout lay(terminal.textMetrics(), doc.line(line));
@@ -313,11 +313,11 @@ TEST_CASE("actions") {
     terminal.setMainWidget(&root);
     w->setGeometry({0, 0, 80, 24});
 
-    File *f = new File(terminal.textMetrics(), w);
+    auto f = std::make_unique<File>(terminal.textMetrics(), w);
 
     DocumentTestHelper t;
 
-    Tui::ZDocument &doc = t.getDoc(f);
+    Tui::ZDocument &doc = t.getDoc(f.get());
     Tui::ZDocumentCursor cursor{&doc, [&terminal,&doc](int line, bool wrappingAllowed) {
             (void)wrappingAllowed;
             Tui::ZTextLayout lay(terminal.textMetrics(), doc.line(line));
@@ -785,31 +785,31 @@ TEST_CASE("actions") {
 
     SECTION("search") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{8,1});
         f->setSearchText("t");
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(false, &terminal, f);
+        t.f3(false, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{5,0});
 
         recorder.clearEvents();
-        t.f3(false, &terminal, f);
+        t.f3(false, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{8,0});
 
         recorder.clearEvents();
-        t.f3(false, &terminal, f);
+        t.f3(false, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{5,0});
         recorder.clearEvents();
     }
     SECTION("search-t") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool backward = GENERATE(true, false);
         CAPTURE(backward);
@@ -829,7 +829,7 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{1,0});
         recorder.clearEvents();
@@ -845,7 +845,7 @@ TEST_CASE("actions") {
     }
     SECTION("search-t-t") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool backward = GENERATE(true, false);
         CAPTURE(backward);
@@ -865,19 +865,19 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{1,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{3,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{1,0});
         recorder.clearEvents();
@@ -886,7 +886,7 @@ TEST_CASE("actions") {
 
     SECTION("search-space-t-t") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool reg = GENERATE(true, false);
         CAPTURE(reg);
@@ -902,19 +902,19 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(false, &terminal, f);
+        t.f3(false, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(false, &terminal, f);
+        t.f3(false, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{4,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(false, &terminal, f);
+        t.f3(false, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,0});
         recorder.clearEvents();
@@ -923,7 +923,7 @@ TEST_CASE("actions") {
 
     SECTION("searchBackword-space-t-t") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool reg = GENERATE(true, false);
         CAPTURE(reg);
@@ -939,19 +939,19 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(true, &terminal, f);
+        t.f3(true, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{4,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(true, &terminal, f);
+        t.f3(true, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(true, &terminal, f);
+        t.f3(true, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{4,0});
         recorder.clearEvents();
@@ -960,7 +960,7 @@ TEST_CASE("actions") {
 
     SECTION("search-t-newline-t") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool backward = GENERATE(true, false);
         CAPTURE(backward);
@@ -979,19 +979,19 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{1,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{1,1});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{1,0});
         recorder.clearEvents();
@@ -1000,7 +1000,7 @@ TEST_CASE("actions") {
 
     SECTION("search-t-newline-space-t") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool backward = GENERATE(true, false);
         CAPTURE(backward);
@@ -1019,19 +1019,19 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,1});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,0});
         recorder.clearEvents();
@@ -1040,7 +1040,7 @@ TEST_CASE("actions") {
 
     SECTION("search-aa") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool backward = GENERATE(true, false);
         CAPTURE(backward);
@@ -1060,13 +1060,13 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{3,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,1});
         recorder.clearEvents();
@@ -1075,7 +1075,7 @@ TEST_CASE("actions") {
 
     SECTION("search-aa-aa") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool backward = GENERATE(true, false);
         CAPTURE(backward);
@@ -1104,7 +1104,7 @@ TEST_CASE("actions") {
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
         for (Tui::ZDocumentCursor::Position point : positions) {
-            t.f3(backward, &terminal, f);
+            t.f3(backward, &terminal, f.get());
             recorder.waitForEvent(cursorSignal);
             CHECK(f->cursorPosition() == point);
             recorder.clearEvents();
@@ -1114,7 +1114,7 @@ TEST_CASE("actions") {
 
     SECTION("search-asd") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool reg = GENERATE(true, false);
         CAPTURE(reg);
@@ -1131,7 +1131,7 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(true, &terminal, f);
+        t.f3(true, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{3,0});
         recorder.clearEvents();
@@ -1141,7 +1141,7 @@ TEST_CASE("actions") {
 
     SECTION("search-forward-backward") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool reg = GENERATE(true, false);
         CAPTURE(reg);
@@ -1162,13 +1162,13 @@ TEST_CASE("actions") {
 
         SECTION("toggel-wraparound") {
             for(int i = 0; i < 3; i++) {
-                t.f3(false, &terminal, f);
+                t.f3(false, &terminal, f.get());
                 recorder.waitForEvent(cursorSignal);
                 CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,0});
                 recorder.clearEvents();
                 CHECK(f->hasSelection() == true);
 
-                t.f3(true, &terminal, f);
+                t.f3(true, &terminal, f.get());
                 recorder.waitForEvent(cursorSignal);
                 CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,2});
                 recorder.clearEvents();
@@ -1182,7 +1182,7 @@ TEST_CASE("actions") {
             positions << Tui::ZDocumentCursor::Position{2,1} << Tui::ZDocumentCursor::Position{2,0} << Tui::ZDocumentCursor::Position{2,1} << Tui::ZDocumentCursor::Position{2,2} << Tui::ZDocumentCursor::Position{2,0} << Tui::ZDocumentCursor::Position{2,2} << Tui::ZDocumentCursor::Position{2,1};
             bool backward = true;
             for (Tui::ZDocumentCursor::Position point : positions) {
-                t.f3(backward, &terminal, f);
+                t.f3(backward, &terminal, f.get());
                 recorder.waitForEvent(cursorSignal);
                 CHECK(f->cursorPosition() == point);
                 recorder.clearEvents();
@@ -1196,7 +1196,7 @@ TEST_CASE("actions") {
 
     SECTION("search-smiley") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool backward = GENERATE(true, false);
         CAPTURE(backward);
@@ -1215,13 +1215,13 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{4,0});
         recorder.clearEvents();
@@ -1230,7 +1230,7 @@ TEST_CASE("actions") {
 
     SECTION("search-smiley-multiline") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
 
         bool backward = GENERATE(true, false);
         CAPTURE(backward);
@@ -1249,13 +1249,13 @@ TEST_CASE("actions") {
 
         recorder.waitForEvent(cursorSignal);
         recorder.clearEvents();
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,0});
         recorder.clearEvents();
         CHECK(f->hasSelection() == true);
 
-        t.f3(backward, &terminal, f);
+        t.f3(backward, &terminal, f.get());
         recorder.waitForEvent(cursorSignal);
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{2,1});
         recorder.clearEvents();
@@ -1264,7 +1264,7 @@ TEST_CASE("actions") {
 
     SECTION("replace") {
         EventRecorder recorder;
-        auto cursorSignal = recorder.watchSignal(f, RECORDER_SIGNAL(&File::cursorPositionChanged));
+        auto cursorSignal = recorder.watchSignal(f.get(), RECORDER_SIGNAL(&File::cursorPositionChanged));
         CHECK(f->cursorPosition() == Tui::ZDocumentCursor::Position{8,1});
 
         f->replaceAll("1","2");
@@ -1295,12 +1295,12 @@ TEST_CASE("multiline") {
     terminal.setMainWidget(&root);
     w->setGeometry({0, 0, 80, 24});
 
-    File *f = new File(terminal.textMetrics(), w);
+    auto f = std::make_unique<File>(terminal.textMetrics(), w);
     f->setFocus();
     f->setGeometry({0, 0, 80, 24});
 
     DocumentTestHelper t;
-    Tui::ZDocument &doc = t.getDoc(f);
+    Tui::ZDocument &doc = t.getDoc(f.get());
     Tui::ZDocumentCursor cursor{&doc, [&terminal,&doc](int line, bool wrappingAllowed) {
             (void)wrappingAllowed;
             Tui::ZTextLayout lay(terminal.textMetrics(), doc.line(line));
