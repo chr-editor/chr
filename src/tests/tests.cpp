@@ -39,11 +39,11 @@ void readWrite(QString in) {
     Tui::ZTerminal terminal(of);
 
     QString out = in + "_dub";
-    File *f = new File(terminal.textMetrics(), nullptr);
-    //f->setFilename(in);
-    CHECK(f->openText(in));
-    f->setFilename(out);
-    CHECK(f->saveText());
+    File f(terminal.textMetrics(), nullptr);
+    //f.setFilename(in);
+    CHECK(f.openText(in));
+    f.setFilename(out);
+    CHECK(f.saveText());
 
     CHECK(fileChecksum(in) == fileChecksum(out));
 
