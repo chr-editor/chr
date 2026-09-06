@@ -13,8 +13,8 @@
 
 const QString attributesFileName = "attributes.file";
 void cleanAttributesFileName() {
-    QFile *file = new QFile(attributesFileName);
-    file->remove();
+    QFile file(attributesFileName);
+    file.remove();
 }
 
 TEST_CASE("attributes") {
