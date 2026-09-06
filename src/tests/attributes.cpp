@@ -19,8 +19,8 @@ void cleanAttributesFileName() {
 
 TEST_CASE("attributes") {
     SECTION("empty") {
-        Attributes *a = new Attributes("");
-        CHECK(a->attributesFile() == "");
+        Attributes a("");
+        CHECK(a.attributesFile() == "");
     }
 
     SECTION("attributes-in-out") {
@@ -50,20 +50,20 @@ TEST_CASE("attributes") {
             datei.close();
         }
 
-        Attributes *a = new Attributes(attributesFileName);
-        a->writeAttributes(file,
+        Attributes a(attributesFileName);
+        a.writeAttributes(file,
                            {testCase.cursorPositionX, testCase.cursorPositionY},
                            testCase.scrollPositionColumn,
                            testCase.scrollPositionLine,
                            testCase.scrollPositionFineLine,
                            list);
 
-        CHECK(a->getAttributesCursorPosition(file).codeUnit == testCase.cursorPositionX);
-        CHECK(a->getAttributesCursorPosition(file).line == testCase.cursorPositionY);
-        CHECK(a->getAttributesScrollCol(file) == testCase.scrollPositionColumn);
-        CHECK(a->getAttributesScrollLine(file) == testCase.scrollPositionLine);
-        CHECK(a->getAttributesScrollFine(file) == testCase.scrollPositionFineLine);
-        CHECK(a->getAttributesLineMarker(file) == list);
+        CHECK(a.getAttributesCursorPosition(file).codeUnit == testCase.cursorPositionX);
+        CHECK(a.getAttributesCursorPosition(file).line == testCase.cursorPositionY);
+        CHECK(a.getAttributesScrollCol(file) == testCase.scrollPositionColumn);
+        CHECK(a.getAttributesScrollLine(file) == testCase.scrollPositionLine);
+        CHECK(a.getAttributesScrollFine(file) == testCase.scrollPositionFineLine);
+        CHECK(a.getAttributesLineMarker(file) == list);
 
         cleanAttributesFileName();
     }
