@@ -1,6 +1,10 @@
 # Changelog chr editor
 ======================
 
+## 0.1.82 (2026-10-13)
+
+  * Fix memory leaks in tests
+
 ## 0.1.81 (2025-11-15)
 
   * New Qt6 support with option -Dqt=qt6
